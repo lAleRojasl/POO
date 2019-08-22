@@ -37,3 +37,5 @@ Enunciado
    Se puede ingresar la opción 1 para ver el balance actual, la 2 para retirar dinero, la 3 para depositar dinero y la 4 para salir del menú.  
    Una vez se haya salido, el programa le solicita al usuario nuevamente ingresar un id, es decir que una vez que se inicie el programa no se detiene su ejecución por si sola.  
 ```
+## Diagrama de Clases
+![alt text](ClassDiagram.png)
