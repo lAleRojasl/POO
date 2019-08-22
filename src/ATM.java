@@ -105,75 +105,78 @@ public class ATM extends JFrame implements ActionListener {
         // Display the counter value on the TextField tfCount
         String userInput = evt.getActionCommand();
 
-        if(userInput == "Cambiar Cuenta"){
-            activeCommand = "_InputID";
-            currentInput = "";
-            activeAccount = null;
-            tfDisplay.setText("Digite su ID: ");
-        }
-
-        else if(userInput == "Ver Balance"){
-            if(activeAccount != null) tfDisplay.setText("Su balance actual es de: "+activeAccount.getBalance());
-        }
-
-        else if(userInput == "Ver Intereses"){
-            if(activeAccount != null) tfDisplay.setText("Sus intereses mensuales son de: "+activeAccount.getMonthlyInterestRate());
-        }
-
-        else if(userInput == "Depositar"){
-            if(activeAccount != null) {
-                activeCommand = "_Deposit";
-                tfDisplay.setText("Digite monto a depositar: ");
-            }
-        }
-
-        else if(userInput == "Retirar"){
-            if(activeAccount != null) {
-                activeCommand = "_Withdraw";
-                tfDisplay.setText("Digite monto a retirar: ");
-            }
-        }
-
-        else if(userInput == "Confirmar"){
-            //Retirar monto
-            if(activeCommand == "_Withdraw"){
-                activeAccount.withdrawCash(Integer.parseInt(currentInput));
+        switch (userInput){
+            case "Cambiar Cuenta":
+                activeCommand = "_InputID";
                 currentInput = "";
-                activeCommand = "_Selecting";
-                tfDisplay.setText("Monto retirado! Nuevo balance: "+activeAccount.getBalance());
-            }
-            //Depositar monto
-            if(activeCommand == "_Deposit"){
-                activeAccount.depositCash(Integer.parseInt(currentInput));
+                activeAccount = null;
+                tfDisplay.setText("Digite su ID: ");
+                break;
+
+            case "Ver Balance":
+                if(activeAccount != null) tfDisplay.setText("Su balance actual es de: "+activeAccount.getBalance());
+                break;
+
+            case "Ver Intereses":
+                if(activeAccount != null) tfDisplay.setText("Sus intereses mensuales son de: "+activeAccount.calculateMonthlyInterest());
+                break;
+
+            case "Depositar":
+                if(activeAccount != null) {
+                    activeCommand = "_Deposit";
+                    tfDisplay.setText("Digite monto a depositar: ");
+                }
+                break;
+
+            case "Retirar":
+                if(activeAccount != null) {
+                    activeCommand = "_Withdraw";
+                    tfDisplay.setText("Digite monto a retirar: ");
+                }
+                break;
+
+            case "Confirmar":
+                //Retirar monto
+                if(activeCommand == "_Withdraw"){
+                    activeAccount.withdrawCash(Integer.parseInt(currentInput));
+                    currentInput = "";
+                    activeCommand = "_Selecting";
+                    tfDisplay.setText("Monto retirado! Nuevo balance: "+activeAccount.getBalance());
+                }
+                //Depositar monto
+                else if(activeCommand == "_Deposit") {
+                    activeAccount.depositCash(Integer.parseInt(currentInput));
+                    currentInput = "";
+                    activeCommand = "_Selecting";
+                    tfDisplay.setText("Monto depositado! Nuevo balance: " + activeAccount.getBalance());
+                }
+                break;
+
+            //Clear Screen inputs
+            case "Borrar":
                 currentInput = "";
-                activeCommand = "_Selecting";
-                tfDisplay.setText("Monto depositado! Nuevo balance: "+activeAccount.getBalance());
-            }
-        }
+                if(activeCommand == "_InputID") tfDisplay.setText("Digite su ID: ");
+                if(activeCommand == "_Deposit") tfDisplay.setText("Digite monto a depositar: ");
+                if(activeCommand == "_Withdraw") tfDisplay.setText("Digite monto a retirar: ");
+                break;
 
-        //Clear Screen inputs
-        else if(userInput == "Borrar"){
-            currentInput = "";
-            if(activeCommand == "_InputID") tfDisplay.setText("Digite su ID: ");
-            if(activeCommand == "_Deposit") tfDisplay.setText("Digite monto a depositar: ");
-            if(activeCommand == "_Withdraw") tfDisplay.setText("Digite monto a retirar: ");
-        }
+            //Append input number to Screen
+            default:
+                //We search for the account with the input ID
+                if(activeCommand == "_InputID"){
+                    int id = Integer.parseInt(evt.getActionCommand());
+                    activeAccount = accounts[id];
+                    activeCommand = "_Selecting";
+                    tfDisplay.setText("Cuenta "+ id + " activa! Desea depositar o retirar?");
+                }
+                //The user is selecting an option
+                if(activeCommand != "_Selecting") {
+                    String inputString = evt.getActionCommand();
+                    currentInput += inputString;
+                    tfDisplay.setText(tfDisplay.getText() + inputString);
+                }
+                break;
 
-        //Append input number to Screen
-        else {
-            //We search for the account with the input ID
-            if(activeCommand == "_InputID"){
-                int id = Integer.parseInt(evt.getActionCommand());
-                activeAccount = accounts[id];
-                activeCommand = "_Selecting";
-                tfDisplay.setText("Cuenta "+ id + " activa! Desea depositar o retirar?");
-            }
-            //The user is selecting an option
-            if(activeCommand != "_Selecting") {
-                String inputString = evt.getActionCommand();
-                currentInput += inputString;
-                tfDisplay.setText(tfDisplay.getText() + inputString);
-            }
         }
     }
 }

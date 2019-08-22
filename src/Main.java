@@ -18,7 +18,7 @@ class Main {
         System.out.println("Cuenta 1 creada con los siguientes parametros:"
                 +"\n\t- ID: " + c1.getId()
                 +"\n\t- Balance: " + c1.getBalance()
-                +"\n\t- Tasa de Interes Anual: " + c1.getAnualInterestRate() + "%"
+                +"\n\t- Tasa de Interes Anual: " + c1.getAnualInterestRate() * 100 + "%"
                 +"\n\t- Fecha de Creación: " + dtf.format(c1.getFechaDeCreacion()) );
 
         System.out.println("\nDepositando 150000 CRC a la cuenta...");
@@ -31,7 +31,8 @@ class Main {
 
         System.out.println("Estado de Cuenta:"
                 +"\n\t- Balance: " + c1.getBalance()
-                +"\n\t- Tasa de Interes Mensual: " + c1.getMonthlyInterestRate()
+                +"\n\t- Tasa de Interes Mensual: " + c1.getMonthlyInterestRate() * 100 + "%"
+                +"\n\t- Interes Mensual: " + c1.calculateMonthlyInterest()
                 +"\n\t- Fecha de Creación: " + dtf.format(c1.getFechaDeCreacion()) );
 
         Cuenta c2 = new Cuenta(2233, 1000000.0d);
@@ -39,7 +40,8 @@ class Main {
         System.out.println("\n\nCuenta 2 creada con los siguientes parametros:"
                 +"\n\t- ID: " + c2.getId()
                 +"\n\t- Balance: " + c2.getBalance()
-                +"\n\t- Tasa de Interes Mensual: " + c2.getMonthlyInterestRate()
+                +"\n\t- Tasa de Interes Mensual: " + c1.getMonthlyInterestRate() * 100 + "%"
+                +"\n\t- Interes Mensual: " + c1.calculateMonthlyInterest()
                 +"\n\t- Fecha de Creación: " + dtf.format(c2.getFechaDeCreacion()) );
 
         //Create ATM Simulator

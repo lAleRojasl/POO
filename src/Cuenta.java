@@ -32,13 +32,9 @@ class Cuenta {
     }
 
     //METHODS
-    public double getMonthlyInterestRate() {
-        return calculateMonthlyRate();
-    }
+    public double getMonthlyInterestRate() { return  this.anualInterestRate  / 12;  }
 
-    public double calculateMonthlyRate() {
-        return this.balance * this.anualInterestRate;
-    }
+    public double calculateMonthlyInterest() { return this.balance * getMonthlyInterestRate();   }
 
     public void withdrawCash(double withdrawalAmount){
         this.balance -= withdrawalAmount;
@@ -58,7 +54,7 @@ class Cuenta {
     }
 
     public double getAnualInterestRate() {
-        return this.anualInterestRate;
+        return this.anualInterestRate ;
     }
 
     public LocalDateTime getFechaDeCreacion() {
