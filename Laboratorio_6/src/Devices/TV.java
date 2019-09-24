@@ -17,6 +17,7 @@ public class TV extends Device {
     //TV's specific methods
     public void setChannel(int newChannel){
         this.channel = newChannel;
+        System.out.println("Changing "+ super.getName() + " to Channel "+ newChannel);
     }
 
     public int getChannel(){

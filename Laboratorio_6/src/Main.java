@@ -36,12 +36,29 @@ public class Main {
         Controller rojasHomeCtl = new Controller(rojasHome);
 
         //Lets turn everything ON
+        System.out.println("\nLets turn everything ON!");
+        System.out.println("-------------------------");
         rojasHomeCtl.switchEverything(true);
 
         //Lets turn everything OFF on Ale's Bedroom
+        System.out.println("\nLets turn everything OFF on Ale's Bedroom!");
+        System.out.println("-------------------------");
+
         rojasHomeCtl.switchByRoom("Ale's Bedroom", false);
 
         //Lets turn OFF ONLY the Kitchen's Microwave
+        System.out.println("\nLets turn OFF ONLY the Kitchen's Microwave");
+        System.out.println("-------------------------");
+
+
+        System.out.println("\nLets turn the Microwave OFF!");
+        System.out.println("-------------------------");
         rojasHomeCtl.switchByDevice("Mega Microwave", false);
+
+        System.out.println("\nLets change the Channel on the Samsung Smart TV!");
+        System.out.println("-------------------------");
+        TV myTV = (TV) rojasHomeCtl.findDevice("Samsung Smart TV");
+        if(myTV != null)
+            myTV.setChannel(35);
     }
 }
