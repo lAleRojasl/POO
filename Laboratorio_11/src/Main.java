@@ -10,5 +10,9 @@ import java.util.ArrayList;
  **********************************************************************/
 public class Main {
     public static void main(String[] args) {
+        Supermercado supermercado = new Supermercado("Rojas Market");
+        AdministradorArchivo archAdmin = new AdministradorArchivo(supermercado);
+        archAdmin.readXSLFile();
+        supermercado.imprimirInventario();
     }
 }
