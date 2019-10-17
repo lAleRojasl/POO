@@ -1,0 +1,101 @@
+@startuml
+
+!define LIGHTBLUE
+!includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
+
+
+Supermercado "1" o-- "muchos" Producto
+Supermercado "1" o-- "muchos" Cliente
+Supermercado "1" o-- "muchos" Membresia
+Cliente "1" o-- "0..1" Membresia
+Carrito "1" o-- "muchos" Producto : tiene
+Promocion "1" ..> "1" Producto
+Factura "1" *-- "1" Carrito
+Factura "1" o-- "1" Cliente
+
+class Producto {
+    - id:int
+    - nombre:String
+    - precioSinImpuesto:float
+    - porcentajeImpuesto:float
+    - precioConImpuesto:float
+    - tipo:tipoVenta
+    - promocion:Promocion
+    - {static} contador:int
+    + getNombre():String
+    + getPrecioSinImpuesto():float
+    + getPrecioConImpuesto():float
+    + setPromocion(String nombre, int cantidad, float precio):void
+    + getPromocion():Promocion
+    + hasPromocion():boolean
+    + toString():String
+}
+
+class Membresia {
+    - id:int
+    - nombre:String
+    - porcentajeDescuento:float
+    - {static} contador:int
+    + Membresia(String nombre, float porcentajeDescuento)
+    + getNombre():String
+    + getPorcentajeDescuento():float
+}
+
+class Promocion {
+    - nombre:String
+    - cantidad:int
+    - precio:float
+    - descuento:float
+    - producto:Producto
+    + Promocion(String nombre, int cantidad, float precio, Producto producto)
+    + getCantidad():int
+    + getDescuento():float
+    + toString():String
+}
+
+class Supermercado {
+    - nombre:String
+    - inventario:ArrayList<Producto>
+    - membresias:ArrayList<Membresia>
+    - clientes:ArrayList<Cliente>
+    + Supermercado(String nombre)
+    + getMembresias():ArrayList<Membresia>
+}
+class Carrito {
+     - productosPorCantidad:HashMap<Producto, Float>
+     + Carrito()
+     + getProductosPorCantidad():float
+     + agregarProductoUnitario(Producto producto):void
+     + agregarProductoUnitario(Producto producto, int cantidad):void
+     + agregarProductoPorPeso(Producto producto, float cantidad):void
+     + void actualizarCantidadProducto(Producto producto, float cantidad):void
+     +  enttryToString(float cantidad, Producto producto):String
+}
+
+class Factura {
+    - sumaProductosConImpuesto:float
+    - sumaProductosSinImpuesto:float
+    - descuento:float
+    - totalAPagar:float
+    - cliente:Cliente
+    - carrito:Carrito
+    + Factura(Cliente cliente, Carrito carrito)
+    + Factura(Carrito carrito)
+    + facturar():void
+    + aplicarPromocion(float cantidad, Producto producto):void
+    + toString():String
+}
+
+class Cliente {
+  - id:int
+  - nombre:String
+  - membresia:Membresia
+  - {static} int contador
+   + Cliente(String nombre)
+   + Cliente(String nombre, Membresia membresia)
+   + getMembresia():Membresia
+   + hasMembresia():boolean
+   + toString():String
+}
+
+@enduml
